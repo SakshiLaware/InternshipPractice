@@ -1,0 +1,247 @@
+mysql> use InternshipPractice;
+Database changed
+mysql> insert into Employee values (101,'Rahul',75000,2,'2025-02-10'),
+    -> (102,'Priya',90000,3,'2024-11-15'),
+    -> (103,'Amit',65000,1,'2025-04-05'),
+    -> (104,'Neha',120000,2,'2023-08-20'),
+    -> (105,'Pooja',85000,4,'2025-01-12'),
+    -> (106,'Vikas',95000,3,'2024-09-01'),
+    -> (107,'Sneha',70000,5,'2025-03-18'),
+    -> (108,'Karan',110000,2,'2024-12-10'),
+    -> (109,'Anjali',80000,4,'2023-06-15'),
+    -> (110,'Rohit',130000,5,'2024-10-22'),
+    -> (111,'Rahul',78000,2,'2025-06-05'),
+    -> (112,'Priya',92000,3,'2025-02-28'),
+    -> (113,'Suresh',88000,1,'2024-07-19'),
+    -> (114,'Pooja',87000,4,'2025-04-10'),
+    -> (115,'Neha',125000,2,'2025-01-25'),
+    -> (116,'Sneha',72000,5,'2025-05-14'),
+    -> (117,'Akash',76000,1,'2024-11-30'),
+    -> (118,'Meera',99000,3,'2025-03-08'),
+    -> (119,'Riya',82000,4,'2025-02-18'),
+    -> (120,'Arjun',115000,2,'2024-08-12');
+Query OK, 20 rows affected (0.05 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> insert into Employee values (121,'Rahul',75000,2,'2025-02-10'),
+    -> (122,'Priya',90000,3,'2024-11-15'),
+    -> (123,'Neha',120000,2,'2023-08-20'),
+    -> (124,'Pooja',85000,4,'2025-01-12'),
+    -> (125,'Sneha',70000,5,'2025-03-18');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select EmpName, Salary, row_number() over(order by Salary desc) as RowNum from Employee;
++---------+-----------+--------+
+| EmpName | Salary    | RowNum |
++---------+-----------+--------+
+| Rohit   | 130000.00 |      1 |
+| Neha    | 125000.00 |      2 |
+| Neha    | 120000.00 |      3 |
+| Neha    | 120000.00 |      4 |
+| Arjun   | 115000.00 |      5 |
+| Karan   | 110000.00 |      6 |
+| Meera   |  99000.00 |      7 |
+| Vikas   |  95000.00 |      8 |
+| Priya   |  92000.00 |      9 |
+| Priya   |  90000.00 |     10 |
+| Priya   |  90000.00 |     11 |
+| Suresh  |  88000.00 |     12 |
+| Pooja   |  87000.00 |     13 |
+| Pooja   |  85000.00 |     14 |
+| Pooja   |  85000.00 |     15 |
+| Riya    |  82000.00 |     16 |
+| Anjali  |  80000.00 |     17 |
+| Rahul   |  78000.00 |     18 |
+| Akash   |  76000.00 |     19 |
+| Rahul   |  75000.00 |     20 |
+| Rahul   |  75000.00 |     21 |
+| Sneha   |  72000.00 |     22 |
+| Sneha   |  70000.00 |     23 |
+| Sneha   |  70000.00 |     24 |
+| Amit    |  65000.00 |     25 |
++---------+-----------+--------+
+25 rows in set (0.01 sec)
+
+mysql> select EmpName, Salary, sum(Salary) over(order by EmpID) as RunningTotal from Employee;
++---------+-----------+--------------+
+| EmpName | Salary    | RunningTotal |
++---------+-----------+--------------+
+| Rahul   |  75000.00 |     75000.00 |
+| Priya   |  90000.00 |    165000.00 |
+| Amit    |  65000.00 |    230000.00 |
+| Neha    | 120000.00 |    350000.00 |
+| Pooja   |  85000.00 |    435000.00 |
+| Vikas   |  95000.00 |    530000.00 |
+| Sneha   |  70000.00 |    600000.00 |
+| Karan   | 110000.00 |    710000.00 |
+| Anjali  |  80000.00 |    790000.00 |
+| Rohit   | 130000.00 |    920000.00 |
+| Rahul   |  78000.00 |    998000.00 |
+| Priya   |  92000.00 |   1090000.00 |
+| Suresh  |  88000.00 |   1178000.00 |
+| Pooja   |  87000.00 |   1265000.00 |
+| Neha    | 125000.00 |   1390000.00 |
+| Sneha   |  72000.00 |   1462000.00 |
+| Akash   |  76000.00 |   1538000.00 |
+| Meera   |  99000.00 |   1637000.00 |
+| Riya    |  82000.00 |   1719000.00 |
+| Arjun   | 115000.00 |   1834000.00 |
+| Rahul   |  75000.00 |   1909000.00 |
+| Priya   |  90000.00 |   1999000.00 |
+| Neha    | 120000.00 |   2119000.00 |
+| Pooja   |  85000.00 |   2204000.00 |
+| Sneha   |  70000.00 |   2274000.00 |
++---------+-----------+--------------+
+25 rows in set (0.03 sec)
+
+mysql> select EmpName, DeptID, Salary, avg(Salary) over(partition by DeptID) as AvgSalary from Employee;
++---------+--------+-----------+---------------+
+| EmpName | DeptID | Salary    | AvgSalary     |
++---------+--------+-----------+---------------+
+| Amit    |      1 |  65000.00 |  76333.333333 |
+| Suresh  |      1 |  88000.00 |  76333.333333 |
+| Akash   |      1 |  76000.00 |  76333.333333 |
+| Rahul   |      2 |  75000.00 | 102250.000000 |
+| Neha    |      2 | 120000.00 | 102250.000000 |
+| Karan   |      2 | 110000.00 | 102250.000000 |
+| Rahul   |      2 |  78000.00 | 102250.000000 |
+| Neha    |      2 | 125000.00 | 102250.000000 |
+| Arjun   |      2 | 115000.00 | 102250.000000 |
+| Rahul   |      2 |  75000.00 | 102250.000000 |
+| Neha    |      2 | 120000.00 | 102250.000000 |
+| Priya   |      3 |  90000.00 |  93200.000000 |
+| Vikas   |      3 |  95000.00 |  93200.000000 |
+| Priya   |      3 |  92000.00 |  93200.000000 |
+| Meera   |      3 |  99000.00 |  93200.000000 |
+| Priya   |      3 |  90000.00 |  93200.000000 |
+| Pooja   |      4 |  85000.00 |  83800.000000 |
+| Anjali  |      4 |  80000.00 |  83800.000000 |
+| Pooja   |      4 |  87000.00 |  83800.000000 |
+| Riya    |      4 |  82000.00 |  83800.000000 |
+| Pooja   |      4 |  85000.00 |  83800.000000 |
+| Sneha   |      5 |  70000.00 |  85500.000000 |
+| Rohit   |      5 | 130000.00 |  85500.000000 |
+| Sneha   |      5 |  72000.00 |  85500.000000 |
+| Sneha   |      5 |  70000.00 |  85500.000000 |
++---------+--------+-----------+---------------+
+25 rows in set (0.02 sec)
+
+mysql> select EmpID, EmpName, Salary,
+    -> case
+    -> when Salary >= 120000 then 'High'
+    -> when Salary >= 80000 then 'Medium'
+    -> else 'low'
+    -> end as SalaryCategory
+    -> from Employee;
++-------+---------+-----------+----------------+
+| EmpID | EmpName | Salary    | SalaryCategory |
++-------+---------+-----------+----------------+
+|   101 | Rahul   |  75000.00 | low            |
+|   102 | Priya   |  90000.00 | Medium         |
+|   103 | Amit    |  65000.00 | low            |
+|   104 | Neha    | 120000.00 | High           |
+|   105 | Pooja   |  85000.00 | Medium         |
+|   106 | Vikas   |  95000.00 | Medium         |
+|   107 | Sneha   |  70000.00 | low            |
+|   108 | Karan   | 110000.00 | Medium         |
+|   109 | Anjali  |  80000.00 | Medium         |
+|   110 | Rohit   | 130000.00 | High           |
+|   111 | Rahul   |  78000.00 | low            |
+|   112 | Priya   |  92000.00 | Medium         |
+|   113 | Suresh  |  88000.00 | Medium         |
+|   114 | Pooja   |  87000.00 | Medium         |
+|   115 | Neha    | 125000.00 | High           |
+|   116 | Sneha   |  72000.00 | low            |
+|   117 | Akash   |  76000.00 | low            |
+|   118 | Meera   |  99000.00 | Medium         |
+|   119 | Riya    |  82000.00 | Medium         |
+|   120 | Arjun   | 115000.00 | Medium         |
+|   121 | Rahul   |  75000.00 | low            |
+|   122 | Priya   |  90000.00 | Medium         |
+|   123 | Neha    | 120000.00 | High           |
+|   124 | Pooja   |  85000.00 | Medium         |
+|   125 | Sneha   |  70000.00 | low            |
++-------+---------+-----------+----------------+
+25 rows in set (0.00 sec)
+
+mysql> Select EmpID, EmpName,
+    -> case DeptID
+    -> when 1 then 'HR'
+    -> when 2 then 'IT'
+    -> when 3 then 'Finance'
+    -> when 4 then 'Marketing'
+    -> when 5 then 'Operations'
+    -> end as Department
+    -> from Employee;
++-------+---------+------------+
+| EmpID | EmpName | Department |
++-------+---------+------------+
+|   101 | Rahul   | IT         |
+|   102 | Priya   | Finance    |
+|   103 | Amit    | HR         |
+|   104 | Neha    | IT         |
+|   105 | Pooja   | Marketing  |
+|   106 | Vikas   | Finance    |
+|   107 | Sneha   | Operations |
+|   108 | Karan   | IT         |
+|   109 | Anjali  | Marketing  |
+|   110 | Rohit   | Operations |
+|   111 | Rahul   | IT         |
+|   112 | Priya   | Finance    |
+|   113 | Suresh  | HR         |
+|   114 | Pooja   | Marketing  |
+|   115 | Neha    | IT         |
+|   116 | Sneha   | Operations |
+|   117 | Akash   | HR         |
+|   118 | Meera   | Finance    |
+|   119 | Riya    | Marketing  |
+|   120 | Arjun   | IT         |
+|   121 | Rahul   | IT         |
+|   122 | Priya   | Finance    |
+|   123 | Neha    | IT         |
+|   124 | Pooja   | Marketing  |
+|   125 | Sneha   | Operations |
++-------+---------+------------+
+25 rows in set (0.02 sec)
+
+mysql> create view HighSalaryEmployees as
+    -> select EmpID, EmpName,Salary from Employee where Salary > 90000;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> select * from HighSalaryEmployees
+    -> ;
++-------+---------+-----------+
+| EmpID | EmpName | Salary    |
++-------+---------+-----------+
+|   104 | Neha    | 120000.00 |
+|   106 | Vikas   |  95000.00 |
+|   108 | Karan   | 110000.00 |
+|   110 | Rohit   | 130000.00 |
+|   112 | Priya   |  92000.00 |
+|   115 | Neha    | 125000.00 |
+|   118 | Meera   |  99000.00 |
+|   120 | Arjun   | 115000.00 |
+|   123 | Neha    | 120000.00 |
++-------+---------+-----------+
+9 rows in set (0.01 sec)
+
+mysql> delimiter $$
+mysql>
+mysql> create trigger check_hiredate
+    -> before insert on employee
+    -> for each row
+    -> begin
+    ->     if new.hiredate > curdate() then
+    ->         signal sqlstate '45000'
+    ->         set message_text = 'future hire date not allowed';
+    ->     end if;
+    -> end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> delimiter ;
+mysql> insert into employee
+    -> values (126,'aditya',85000,2,'2027-01-01');
+ERROR 1644 (45000): future hire date not allowed
+mysql>
