@@ -1,0 +1,36 @@
+Exploratory Data Analysis (EDA) – Key Findings and Insights
+1. Dataset Overview
+The dataset consists of 524,202 records and 19 features, providing a large and diverse collection of used car auction data.
+The large number of records ensures that the analysis is statistically meaningful and suitable for identifying market trends.
+2. Data Quality
+The dataset is completely cleaned, with no missing values present in any column.
+Duplicate records were checked and removed during the data cleaning phase, ensuring the reliability and consistency of the analysis.
+3. Statistical Summary
+Numerical variables such as selling price, MMR, odometer reading, condition, and car age exhibit a wide range of values.
+The presence of high maximum values compared to the average suggests that the dataset includes both economy vehicles and premium or luxury vehicles.
+4. Correlation Analysis
+The correlation heatmap indicates that MMR (Manheim Market Report) has the strongest positive correlation with selling price, making it one of the most influential factors in determining vehicle value.
+Car age and odometer reading show a negative relationship with selling price, indicating that older and heavily driven vehicles generally have lower resale values.
+The engineered feature price ratio also demonstrates a positive relationship with selling price, confirming its usefulness in the analysis.
+5. Selling Price Distribution
+The selling price distribution is positively skewed (right-skewed), meaning that most vehicles are sold in the low-to-medium price range.
+Only a small percentage of vehicles belong to the high-price luxury segment, resulting in a long right tail in the distribution.
+6. Top Car Manufacturers
+The dataset is dominated by popular automobile manufacturers such as Ford, Chevrolet, Toyota, Nissan, and Honda.
+Luxury manufacturers appear less frequently, indicating that the used car auction market primarily consists of mass-market vehicles.
+7. Average Selling Price by Body Type
+Vehicle body style has a noticeable impact on resale value.
+SUVs, pickup trucks, and luxury vehicle categories generally have higher average selling prices compared to sedans and hatchbacks.
+This suggests that vehicle size, utility, and market demand influence pricing.
+8. Car Age vs. Selling Price
+A clear negative relationship exists between car age and selling price.
+As vehicles become older, their resale value generally decreases due to depreciation.
+Newer vehicles consistently achieve higher selling prices in the auction market.
+9. Odometer vs. Selling Price
+The scatter plot shows that vehicles with higher odometer readings generally sell at lower prices.
+Low-mileage vehicles command higher resale values because they are perceived to have less wear and tear.
+Although mileage significantly affects price, other factors such as brand, condition, and model also contribute to price variation.
+10. Overall Conclusion
+The exploratory data analysis demonstrates that vehicle resale prices are influenced by multiple factors, including market valuation (MMR), vehicle age, mileage, manufacturer, and body type.
+Among these factors, MMR is the strongest predictor of selling price, while depreciation and mileage have a negative impact on resale value.
+The dataset is well-structured, free from missing values, and suitable for further predictive modeling and machine learning applications.
